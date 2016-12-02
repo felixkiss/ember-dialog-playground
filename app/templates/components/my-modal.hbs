@@ -1,0 +1,9 @@
+{{#if show}}
+  <div class="modal-open">
+    <div {{action "close"}} class="modal" style="display: block; padding-left: 0; background-color: rgba(128, 128, 128, 0.77);">
+      <div {{action "doNothing" bubbles=false}} class="modal-dialog {{size}}">
+        {{yield outsideApi}}
+      </div>
+    </div>
+  </div>
+{{/if}}
