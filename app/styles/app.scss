@@ -4,3 +4,7 @@
 .main-container {
   padding-top: 70px;
 }
+
+body.modal-open {
+  overflow: hidden;
+}
