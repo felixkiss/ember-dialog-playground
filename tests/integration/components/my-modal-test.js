@@ -5,20 +5,32 @@ moduleForComponent('my-modal', 'Integration | Component | my modal', {
   integration: true
 });
 
-test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+test('it can show modal', function(assert) {
+  this.set('show', false);
 
-  this.render(hbs`{{my-modal}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
   this.render(hbs`
-    {{#my-modal}}
-      template block text
+    {{#my-modal show=show}}
+      <span class="foo">bar</span>
     {{/my-modal}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$('.foo').length, 0, 'should not show foo');
+
+  this.set('show', true);
+
+  assert.equal(this.$('.foo').length, 1, 'should show foo');
+});
+
+test('it yields action to close modal', function(assert) {
+  this.set('show', true);
+
+  this.render(hbs`
+    {{#my-modal show=show as |modal|}}
+      <button {{action modal.close}} class="close">close</button>
+    {{/my-modal}}
+  `);
+
+  this.$('.close').click();
+
+  assert.equal(this.get('show'), false, 'modal should not be shown');
 });
